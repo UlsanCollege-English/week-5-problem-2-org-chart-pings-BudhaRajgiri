@@ -1,10 +1,14 @@
+# src/org_reviewers.py
 
-## Starter code — `src/org_reviewers.py`
+def count_senior(node, min_level):
+    if node is None:
+        return 0
 
-def count_senior(root, min_level):
-    """
-    Return how many people in the org tree have level >= min_level.
-    Node format: {"name": str, "level": int, "reports": [nodes]}
-    """
-    # TODO: implement recursively
-    raise NotImplementedError
+    # current person qualifies?
+    count = 1 if node.get("level", 0) >= min_level else 0
+
+    # get reports (default empty list if missing)
+    for child in node.get("reports", []):
+        count += count_senior(child, min_level)
+
+    return count
